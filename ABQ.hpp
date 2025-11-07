@@ -99,6 +99,7 @@ class ABQ : public QueueInterface<T>{
         tempArray[curr_size_] = data;
         delete[] this->array_;
         array_ = tempArray;
+        delete tempArray;
         this->curr_size_ += 1;
     }
 
