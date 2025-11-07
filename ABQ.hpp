@@ -96,10 +96,9 @@ class ABQ : public QueueInterface<T>{
         for (size_t i = 0; i <= this->curr_size_ - 1; i++) {
             tempArray[i] = array_[i];
         }
-        tempArray[this->curr_size_] = data;
+        tempArray[curr_size_] = data;
         delete[] this->array_;
         array_ = tempArray;
-        delete[] tempArray;
         this->curr_size_ += 1;
     }
 
