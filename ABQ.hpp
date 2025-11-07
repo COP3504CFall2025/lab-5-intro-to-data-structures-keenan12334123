@@ -85,7 +85,7 @@ class ABQ : public QueueInterface<T>{
 
     // Insertion
     void enqueue(const T& data) override {
-        T tempArray;
+        T* tempArray;
         if (this->curr_size_ == this->capacity_) {
             tempArray = new T[this->capacity_ * 2];
             this->capacity_ *= 2;
@@ -99,6 +99,7 @@ class ABQ : public QueueInterface<T>{
         tempArray[curr_size_] = data;
         delete[] this->array_;
         array_ = tempArray;
+        delete[] tempArray;
         this->curr_size_ += 1;
     }
 
