@@ -93,12 +93,13 @@ class ABQ : public QueueInterface<T>{
         else {
             tempArray = new T[this->capacity_];
         }
-        for (size_t i = 0; i < this->curr_size_ - 1; i++) {
+        for (size_t i = 0; i <= this->curr_size_ - 1; i++) {
             tempArray[i] = array_[i];
         }
         tempArray[this->curr_size_] = data;
         delete[] this->array_;
         array_ = tempArray;
+        delete[] tempArray;
         this->curr_size_ += 1;
     }
 
