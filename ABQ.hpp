@@ -15,9 +15,9 @@ class ABQ : public QueueInterface<T>{
     T* array_;
     static constexpr size_t scale_factor_ = 2;
 
-public:
+    public:
     // Constructors + Big 5
-    ABQ() {
+    ABQ(){
         capacity_ = 0;
         curr_size_ =0;
         array_ = new T[capacity_];
@@ -49,7 +49,7 @@ public:
 
     ABQ(ABQ&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
         other.array_ = nullptr;
-        other.curr_size = 0;
+        other.curr_size_ = 0;
         other.capacity_ = 0;
     }
     ABQ& operator=(ABQ&& rhs) noexcept {
@@ -58,24 +58,24 @@ public:
         }
         delete[] this->array_;
         this->capacity_ = rhs.capacity_;
-        this->curr_size_ = rhs.size_;
+        this->curr_size_ = rhs.curr_size_;
         this->array_ = rhs.array_;
 
         rhs.array_ =nullptr;
         rhs.curr_size_ = 0;
-        rhs.size_ = 0;
+        rhs.currsize_ = 0;
         return *this;
     }
     ~ABQ() noexcept override {
         delete[] this->array_;
         this->array_ = nullptr;
-        this->curr_size = 0;
-        this->size = 0;
+        this->curr_size_ = 0;
+        this->capacity_ = 0;
     }
 
     // Getters
     [[nodiscard]] size_t getSize() const noexcept override {
-        return this->curr_size;
+        return this->curr_size_;
     }
     [[nodiscard]] size_t getMaxCapacity() const noexcept {
         return this->capacity_;
@@ -87,36 +87,37 @@ public:
     // Insertion
     void enqueue(const T& data) override {
         T* doubleArray;
-        if (this->curr_size == this->capacity_) {
+        if (this->curr_size_ == this->capacity_) {
             doubleArray = new T(this->capacity_ * 2);
             this->capacity_ *= 2;
         }
         else {
             doubleArray = new T(this->capacity_);
         }
-        for (int i = 0; i < this->curr_size; i++) {
+        for (int i = 0; i < this->curr_size_; i++) {
             doubleArray[i] = array_[i];
         }
-        doubleArray[this->curr_size] = data;
+        doubleArray[this->curr_size_] = data;
         delete[] this->array_;
         array_ = doubleArray;
         doubleArray = nullptr;
-        this->curr_size += 1;
+        this->curr_size_ += 1;
     }
 
     // Access
     T peek() const override {
-        return this->array_[this->curr_size - 1];
+        return this->array_[this->curr_size_ - 1];
     }
 
     // Deletion
     T dequeue() override {
+        T temp = this->array_[curr_size_ - 1];
         delete this->array_[curr_size_ - 1];
-        this->curr_size -= 1;
-        return array_;
+        this->curr_size_ -= 1;
+        return temp;
     }
     void PrintForward() {
-        for (int i = 0; i < this->curr_size; i++) {
+        for (int i = 0; i < this->curr_size_; i++) {
             std::cout << this->array_[i] << std::endl;
         }
     }
