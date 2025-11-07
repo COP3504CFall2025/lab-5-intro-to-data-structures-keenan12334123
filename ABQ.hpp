@@ -28,7 +28,7 @@ class ABQ : public QueueInterface<T>{
     }
 
     ABQ(const ABQ& other) : array_(new T[other.capacity_]), capacity_(other.capacity_), curr_size_(other.curr_size_) {
-        for (int i = 0; i < other.curr_size_; i++) {
+        for (size_t i = 0; i < other.curr_size_; i++) {
             array_[i] = other.array_[i];
         }
     }
@@ -40,7 +40,7 @@ class ABQ : public QueueInterface<T>{
         this->array_ = new_arr;
         this->capacity_ = (rhs.capacity_);
         this->curr_size_ = (rhs.curr_size_);
-        for (int i = 0; i < rhs.curr_size_; i++) {
+        for (size_t i = 0; i < rhs.curr_size_; i++) {
             array_[i] = rhs.array_[i];
         }
         return *this;
@@ -62,7 +62,7 @@ class ABQ : public QueueInterface<T>{
 
         rhs.array_ =nullptr;
         rhs.curr_size_ = 0;
-        rhs.currsize_ = 0;
+        rhs.curr_size_ = 0;
         return *this;
     }
     ~ABQ() noexcept override {
@@ -93,7 +93,7 @@ class ABQ : public QueueInterface<T>{
         else {
             doubleArray = new T(this->capacity_);
         }
-        for (int i = 0; i < this->curr_size_; i++) {
+        for (size_t i = 0; i < this->curr_size_; i++) {
             doubleArray[i] = array_[i];
         }
         doubleArray[this->curr_size_] = data;
@@ -111,17 +111,17 @@ class ABQ : public QueueInterface<T>{
     // Deletion
     T dequeue() override {
         T temp = this->array_[curr_size_ - 1];
-        delete this->array_[curr_size_ - 1];
+        this->array_[curr_size_ - 1] = 0;
         this->curr_size_ -= 1;
         return temp;
     }
     void PrintForward() {
-        for (int i = 0; i < this->curr_size_; i++) {
+        for (size_t i = 0; i < this->curr_size_; i++) {
             std::cout << this->array_[i] << std::endl;
         }
     }
     void PrintReverse() {
-        for (int i = curr_size_; i < 0; --i) {
+        for (size_t i = curr_size_; i < 0; --i) {
             std::cout << this->array_[i] << std::endl;
         }
     }
