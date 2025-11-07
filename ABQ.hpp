@@ -9,7 +9,6 @@ using std::size_t;
 
 template<typename T>
 class ABQ : public QueueInterface<T>{
-
     size_t capacity_;
     size_t curr_size_;
     T* array_;
@@ -18,8 +17,8 @@ class ABQ : public QueueInterface<T>{
     public:
     // Constructors + Big 5
     ABQ(){
-        capacity_ = 0;
-        curr_size_ =0;
+        capacity_ =  0;
+        curr_size_ = 0;
         array_ = new T[capacity_];
     }
     explicit ABQ(const size_t capacity) {
