@@ -17,7 +17,7 @@ class ABQ : public QueueInterface<T>{
     public:
     // Constructors + Big 5
     ABQ(){
-        capacity_ =  0;
+        capacity_ =  1;
         curr_size_ = 0;
         array_ = new T[capacity_];
     }
@@ -49,7 +49,7 @@ class ABQ : public QueueInterface<T>{
     ABQ(ABQ&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
         other.array_ = nullptr;
         other.curr_size_ = 0;
-        other.capacity_ = 0;
+        other.capacity_ = 1;
     }
     ABQ& operator=(ABQ&& rhs) noexcept {
         if (this == &rhs) {
@@ -62,7 +62,7 @@ class ABQ : public QueueInterface<T>{
 
         rhs.array_ =nullptr;
         rhs.curr_size_ = 0;
-        rhs.curr_size_ = 0;
+        rhs.capacity_ = 1;
         return *this;
     }
     ~ABQ() noexcept override {
