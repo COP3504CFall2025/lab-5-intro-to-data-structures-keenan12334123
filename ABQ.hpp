@@ -17,7 +17,7 @@ class ABQ : public QueueInterface<T>{
     public:
     // Constructors + Big 5
     ABQ(){
-        capacity_ =  1;
+        capacity_ =  0;
         curr_size_ = 0;
         array_ = new T[capacity_];
     }
@@ -87,11 +87,11 @@ class ABQ : public QueueInterface<T>{
     void enqueue(const T& data) override {
         T* doubleArray;
         if (this->curr_size_ == this->capacity_) {
-            doubleArray = new T(this->capacity_ * 2);
+            doubleArray = new T[this->capacity_ * 2];
             this->capacity_ *= 2;
         }
         else {
-            doubleArray = new T(this->capacity_);
+            doubleArray = new T[this->capacity_];
         }
         for (size_t i = 0; i < this->curr_size_; i++) {
             doubleArray[i] = array_[i];
@@ -99,7 +99,6 @@ class ABQ : public QueueInterface<T>{
         doubleArray[this->curr_size_] = data;
         delete[] this->array_;
         array_ = doubleArray;
-        doubleArray = nullptr;
         this->curr_size_ += 1;
     }
 
