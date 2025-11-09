@@ -109,7 +109,7 @@ class ABQ : public QueueInterface<T>{
     // Deletion
     T dequeue() override {
         if (this->curr_size_ == 0) {
-            throw std::out_of_range("Empty queue");
+            throw std::runtime_error("Empty queue");
         }
         else {
             T* temp = new T[this->capacity_];
