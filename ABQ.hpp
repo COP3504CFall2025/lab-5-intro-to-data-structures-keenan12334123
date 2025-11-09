@@ -120,8 +120,8 @@ class ABQ : public QueueInterface<T>{
             delete[] this->array_;
             this->array_ = temp;
             this->curr_size_ -= 1;
-            if (capacity_ / curr_size_  >= 2) {
-                capacity_ /= 2;
+            if (this->curr_size_ != 0 && this->curr_size_ * 2 <= this->capacity_) {
+                this->capacity_ /= 2;
             }
             return test;
         }
