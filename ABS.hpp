@@ -9,17 +9,21 @@ using std::size_t;
 
 template<typename T>
 class ABS : public StackInterface<T> {
+    size_t capacity_;
+    size_t curr_size_;
+    T* array_;
+    static constexpr size_t scale_factor_ = 2;
 public:
     // Big 5 + Parameterized Constructor
     ABS() {
-        capacity_ = 0;
-        curr_size_ =0;
-        array_ = new T[capacity_];
+        this->capacity_ = 1;
+        this->curr_size_ = 0;
+        this->array_ = new T[capacity_];
     }
     explicit ABS(const size_t capacity) {
-        capacity_ = capacity;
-        curr_size_ = 0;
-        array_ = new T[capacity_];
+        this->capacity_ = capacity;
+        this->curr_size_ = 0;
+        this->array_ = new T[capacity_];
     }
 
     ABS(const ABS& other) : array_(new T[other.capacity_]), capacity_(other.capacity_), curr_size_(other.curr_size_) {
@@ -43,8 +47,8 @@ public:
 
     ABS(ABS&& other) noexcept : capacity_(other.capacity_), curr_size_(other.curr_size_), array_(other.array_) {
         other.array_ = nullptr;
-        other.curr_size = 0;
-        other.capacity_ = 0;
+        other.curr_size_ = 0;
+        other.capacity_ = 1;
     }
     ABS& operator=(ABS&& rhs) noexcept {
         if (this == &rhs) {
@@ -52,24 +56,24 @@ public:
         }
         delete[] this->array_;
         this->capacity_ = rhs.capacity_;
-        this->curr_size_ = rhs.size_;
+        this->curr_size_ = rhs.curr_size_;
         this->array_ = rhs.array_;
 
         rhs.array_ =nullptr;
         rhs.curr_size_ = 0;
-        rhs.size_ = 0;
+        rhs.capacity_ = 1;
         return *this;
     }
     ~ABS() noexcept override {
         delete[] this->array_;
         this->array_ = nullptr;
-        this->curr_size = 0;
-        this->size = 0;
+        this->curr_size_ = 0;
+        this->capacity_ = 1;
     }
 
     // Get the number of items in the ABS
     [[nodiscard]] size_t getSize() const noexcept override {
-        return this->curr_size;
+        return this->curr_size_;
     }
 
     // Get the max size of the ABS
@@ -84,35 +88,49 @@ public:
 
     // Push item onto the stack
     void push(const T& data) override {
-        T* doubleArray;
-        if (this->curr_size == this->capacity_) {
-            doubleArray = new T(this->capacity_ * 2);
-            this->capacity_ *= 2;
+        if (this->curr_size_ == this->capacity_) {
+            T newCapacity = this->capacity_ * 2;
+            this->capacity_ = newCapacity;
         }
-        else {
-            doubleArray = new T(this->capacity_);
-        }
-        doubleArray[0] = data;
-        for (int i = 1; i < this->curr_size; i++) {
-            doubleArray[i] = array_[i - 1];
-        }
+        T* tempArray = new T[this->capacity_ * 2];
+        tempArray[0] = data;
+            for (size_t i = 0; i < this->curr_size_; ++i) {
+                tempArray[i + 1] = this->array_[i];
+            }
         delete[] this->array_;
-        array_ = doubleArray;
-        doubleArray = nullptr;
-        this->curr_size += 1;
+        this->array_ = tempArray;
+        this->curr_size_ += 1;
     }
 
     T peek() const override {
-        return this->array_[this->curr_size - 1];
+        if (this->curr_size_ == 0) {
+            throw std::runtime_error("Empty stack");
+        }
+        return this->array_[this->curr_size_ - 1];
     }
 
     T pop() override {
-        delete this->array_[curr_size_ - 1];
-        this->curr_size -= 1;
-        return array_;
+        if (this->curr_size_ == 0) {
+            throw std::runtime_error("Empty stack");
+        }
+        else {
+            T* temp = new T[this->capacity_];
+            T test = this->array_[this->curr_size_ - 1];
+            for (size_t i = 0; i < this->curr_size_ - 1; ++i) {
+                temp[i] = this->array_[i];
+            }
+            delete[] this->array_;
+            this->array_ = temp;
+            this->curr_size_ -= 1;
+
+            if (this->curr_size_ * 2 < this->capacity_ && this-> capacity_ > 1) {
+                this->capacity_ /= 2;
+            }
+            return test;
+        }
     }
     void PrintForward() {
-        for (int i = 0; i < this->curr_size; i++) {
+        for (int i = 0; i < this->curr_size_; i++) {
             std::cout << this->array_[i] << std::endl;
         }
     }
@@ -121,9 +139,4 @@ public:
             std::cout << this->array_[i] << std::endl;
         }
     }
-private:
-    size_t capacity_;
-    size_t curr_size_;
-    T* array_;
-    static constexpr size_t scale_factor_ = 2;
 };
