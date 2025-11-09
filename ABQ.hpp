@@ -105,11 +105,17 @@ class ABQ : public QueueInterface<T>{
 
     // Deletion
     T dequeue() override {
-        T temp = this->array_[curr_size_ - 1];
-        this->array_[curr_size_ - 1] = 0;
+        T* temp = this->array_[this->capacity_];
+        T data = this->array_[this->curr_size_ - 1];
+        for (size_t i = 0; i < this->curr_size_ - 2; ++i) {
+            temp[i] = this->array_[i];
+        }
+        delete[] this->array_;
+        this->array_ = temp;
         this->curr_size_ -= 1;
-        return temp;
+        return data;
     }
+
     void PrintForward() {
         for (size_t i = 0; i < this->curr_size_; i++) {
             std::cout << this->array_[i] << std::endl;
