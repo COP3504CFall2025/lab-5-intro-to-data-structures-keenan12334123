@@ -101,25 +101,26 @@ class ABQ : public QueueInterface<T>{
     // Access
     T peek() const override {
         if (this->curr_size_ != 0) {
-            return this->array_[this->curr_size_ - 1];
+            return this->array_[0];
         }
-        return T();
+        throw std::out_of_range("Empty queue");
     }
 
     // Deletion
     T dequeue() override {
         if (this->curr_size_ == 0) {
-            return T();
+            throw std::out_of_range("Empty queue");
         }
         else {
             T* temp = new T[this->capacity_];
-            for (size_t i = 0; i < this->curr_size_ - 2; ++i) {
+            T test = this->array_[0];
+            for (size_t i = 1; i < this->curr_size_ - 1; ++i) {
                 temp[i] = this->array_[i];
             }
             delete[] this->array_;
             this->array_ = temp;
             this->curr_size_ -= 1;
-            return this->array_[this->curr_size_ - 1];
+            return test;
         }
     }
 
