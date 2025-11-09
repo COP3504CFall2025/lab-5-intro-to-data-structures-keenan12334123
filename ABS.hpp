@@ -92,11 +92,11 @@ public:
             T newCapacity = this->capacity_ * 2;
             this->capacity_ = newCapacity;
         }
-        T* tempArray = new T[this->capacity_ * 2];
-        tempArray[0] = data;
+        T* tempArray = new T[this->capacity_];
             for (size_t i = 0; i < this->curr_size_; ++i) {
-                tempArray[i + 1] = this->array_[i];
+                tempArray[i] = this->array_[i];
             }
+        tempArray[this->curr_size_] = data;
         delete[] this->array_;
         this->array_ = tempArray;
         this->curr_size_ += 1;
