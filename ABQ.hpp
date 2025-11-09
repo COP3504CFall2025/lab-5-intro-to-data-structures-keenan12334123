@@ -100,7 +100,10 @@ class ABQ : public QueueInterface<T>{
 
     // Access
     T peek() const override {
-        return this->array_[this->curr_size_ - 1];
+        if (this->curr_size_ != 0) {
+            return this->array_[0];
+        }
+        return T();
     }
 
     // Deletion
@@ -110,8 +113,8 @@ class ABQ : public QueueInterface<T>{
         }
         else {
             T* temp = new T[this->capacity_];
-            T data = this->array_[0];
-            for (size_t i = 1; i < this->curr_size_ - 1; ++i) {
+            T data = this->array_[this->curr_size_ - 1];
+            for (size_t i = 0; i < this->curr_size_ - 2; ++i) {
                 temp[i] = this->array_[i];
             }
             delete[] this->array_;
