@@ -87,12 +87,12 @@ class ABQ : public QueueInterface<T>{
     void enqueue(const T& data) override {
         if (this->curr_size_ == this->capacity_) {
             T* tempArray = new T[this->capacity_ * 2];
-            this->capacity_ *= 2;
             for (size_t i = 0; i < this->curr_size_ - 1; ++i) {
                 tempArray[i] = this->array_[i];
             }
             delete[] this->array_;
             this->array_ = tempArray;
+            this->capacity_ *= 2;
         }
         this->array_[this->curr_size_] = data;
         this->curr_size_ += 1;
@@ -119,7 +119,7 @@ class ABQ : public QueueInterface<T>{
             delete[] this->array_;
             this->array_ = temp;
             this->curr_size_ -= 1;
-            return this->array_[0];
+            return this->array_;
         }
     }
 
