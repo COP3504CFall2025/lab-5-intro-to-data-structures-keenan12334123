@@ -105,15 +105,20 @@ class ABQ : public QueueInterface<T>{
 
     // Deletion
     T dequeue() override {
-        T* temp = new T[this->capacity_];
-        T data = this->array_[this->curr_size_ - 1];
-        for (size_t i = 0; i < this->curr_size_ - 2; ++i) {
-            temp[i] = this->array_[i];
+        if (this->curr_size_ == 0) {
+            return T();
         }
-        delete[] this->array_;
-        this->array_ = temp;
-        this->curr_size_ -= 1;
-        return data;
+        else {
+            T* temp = new T[this->capacity_];
+            T data = this->array_[0];
+            for (size_t i = 1; i < this->curr_size_ - 1; ++i) {
+                temp[i] = this->array_[i];
+            }
+            delete[] this->array_;
+            this->array_ = temp;
+            this->curr_size_ -= 1;
+            return data;
+        }
     }
 
     void PrintForward() {
