@@ -46,51 +46,64 @@ public:
 
 	// Insertion
 	void addHead(const T& data) {
-		Node* newHead = new Node(data, nullptr, head);
-		head = newHead;
+		if (count == 0){
+			head = new Node(data, nullptr, nullptr);
+			tail = head;
+		}
+		else {
+			Node* newHead = new Node(data, nullptr, head);
+			head = newHead;
+		}
 		count++;
 	}
 	void addTail(const T& data) {
-		Node* newTail = new Node(data, tail, nullptr);
-		tail = newTail;
+		if (count == 0){
+			tail = new Node(data, nullptr, nullptr);
+			head = tail;
+		}
+		else {
+			Node* newTail = new Node(data, tail, nullptr);
+			tail = newTail;
+		}
 		count++;
 	}
 
 	// Removal
 	bool removeHead() {
-		if (count >= 1) {
-			if (head == tail) {
-				delete &head;
-				head = nullptr;
-				tail = nullptr;
-			}
-			else {
-				Node* temp = head->next;
-				delete &head;
-				head = temp;
-			}
-			count--;
-			return true;
+		if (count == 0) {
+			return false;
 		}
-		return false;
+		if (head == tail) {
+			delete head;
+			head = nullptr;
+			tail = nullptr;
+		}
+		else {
+			Node* temp = head->next;
+			delete head;
+			head = temp;
+		}
+		count--;
+		return true;
 	}
 	bool removeTail() {
-		if (count >= 1) {
-			if (head == tail) {
-				delete &head;
-				head = nullptr;
-				tail = nullptr;
-			}
-			else {
-				Node* temp = tail->prev;
-				delete &tail;
-				tail = temp;
-			}
-			count--;
-			return true;
+		if (count == 0) {
+			return false;
 		}
-		return false;
+		if (head == tail) {
+			delete head;
+			head = nullptr;
+			tail = nullptr;
+		}
+		else {
+			Node* temp = tail->prev;
+			delete tail;
+			tail = temp;
+		}
+		count--;
+		return true;
 	}
+
 	void Clear() {
 		while (removeHead()) {}
 	}
@@ -134,6 +147,10 @@ public:
 		other.tail = nullptr;
 		other.count = 0;
 	}
+	int getCount() {
+		return count;
+	}
+
 	~LinkedList() {
 		this->Clear();
 	}
@@ -143,7 +160,6 @@ private:
 	Node* head;
 	Node* tail;
 	unsigned int count;
-
 
 };
 
