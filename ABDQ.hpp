@@ -35,7 +35,7 @@ public:
         data_ = new T[capacity_];
     }
     ABDQ(const ABDQ& other): data_(new T[other.capacity_]), capacity_(other.capacity_), front_(other.back_), back_(other.back_), size_(other.curr_size_) {
-        for (int i = 0; i < other.size_; i++) {
+        for (size_t i = 0; i < other.size_; i++) {
             data_[i] = other.data_[i];
         }
     }
@@ -58,7 +58,7 @@ public:
         this->curr_size_ = (other.size_);
         this->front_ = (other.front_);
         this->back_ = (other.back_);
-        for (int i = 0; i < other.size_; i++) {
+        for (size_t i = 0; i < other.size_; i++) {
             data_[i] = other.data_[i];
         }
         return *this;
@@ -101,7 +101,7 @@ public:
         else {
             tempArray = new T[this->capacity_];
         }
-        for (int i = 0; i < back_; i++) {
+        for (size_t i = 0; i < back_; i++) {
             tempArray[i] = this->data_[i];
         }
         tempArray[front_] = item;
@@ -131,12 +131,12 @@ public:
                 tempArray[i + 1] = this->data_[i];
             }
             tempArray[front_] = item;
-            for (int i = 0; i < back_; i++) {
+            for (size_t i = 0; i < back_; i++) {
                 tempArray[i + 1] = this->data_[i];
             }
         }
         else {
-            for (int i = 0; i <= back_; i++) {
+            for (size_t i = 0; i <= back_; i++) {
                 tempArray[i] = this->data_[i];
             }
             tempArray[back_ + 1] = item;
@@ -230,9 +230,15 @@ public:
 
     // Access
     const T& front() const override {
+        if (this->size_ == 0) {
+            throw std::runtime_error("Empty queue");
+        }
         return this->data_[this->front_];
     }
     const T& back() const override {
+        if (this->size_ == 0) {
+            throw std::runtime_error("Empty queue");
+        }
         return this->data_[this->back_];
     }
     void PrintForward() {
