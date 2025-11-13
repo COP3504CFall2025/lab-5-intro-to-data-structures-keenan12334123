@@ -15,9 +15,7 @@ private:
 
 public:
     // Constructor
-    LLDQ() {
-        list = LinkedList<T>();
-    }
+    LLDQ() = default;
 
     // Core Insertion Operations
     void pushFront(const T& item) override {
@@ -40,7 +38,7 @@ public:
         if (getSize() == 0) {
             throw std::runtime_error("LLS::pop");
         }
-        T temp = ((this->list).getTail())->data;
+        T temp = ((this->list).getTail())->prev;
         (this->list.removeTail());
         return temp;
     }

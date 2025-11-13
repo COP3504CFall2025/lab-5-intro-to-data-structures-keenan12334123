@@ -84,7 +84,12 @@ public:
 			Node* temp = head->next;
 			delete head;
 			head = temp;
-			head->prev = nullptr;
+			if (head) {
+				head->prev = nullptr;
+			}
+			else {
+				tail = nullptr;
+			}
 		}
 		count--;
 		return true;
@@ -102,7 +107,12 @@ public:
 			Node* temp = tail->prev;
 			delete tail;
 			tail = temp;
-			tail->next = nullptr;
+			if (tail) {
+				tail->next = nullptr;
+			}
+			else {
+				head = nullptr;
+			}
 		}
 		count--;
 		return true;
