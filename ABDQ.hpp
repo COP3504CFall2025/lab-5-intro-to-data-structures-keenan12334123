@@ -85,7 +85,7 @@ public:
     }
     ~ABDQ() {
         delete[] this->data_;
-        this->capacity_ = 1;
+        this->capacity_ = 4;
         this->size_ = 0;
         this->front_ = 0;
         this->back_ = 0;
