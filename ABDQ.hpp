@@ -105,8 +105,8 @@ public:
             tempArray[i] = this->data_[i];
         }
         tempArray[front_] = item;
-        for (size_t i = front_ + 1; i < this->size_; ++i) {
-            tempArray[i] = this->data_[i];
+        for (size_t i = front_; i < this->size_; ++i) {
+            tempArray[i + 1] = this->data_[i];
         }
         delete[] this->data_;
         this->data_ = tempArray;
