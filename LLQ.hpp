@@ -23,10 +23,10 @@ public:
     // Deletion
     T dequeue() override {
         if (getSize() == 0) {
-            throw std::out_of_range("LLS::pop");
+            throw std::runtime_error("LLS::pop");
         }
-        T temp = ((this->list).getTail())->data;
-        (this->list.removeTail());
+        T temp = ((this->list).getHead())->data;
+        (this->list.removeHead());
         return temp;
     }
 
@@ -35,7 +35,7 @@ public:
         if (getSize() == 0) {
             throw std::runtime_error("Empty stack");
         }
-        return ((this->list).getTail())->data;
+        return ((this->list).getHead())->data;
     }
 
     // Getter
