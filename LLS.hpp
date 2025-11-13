@@ -23,7 +23,7 @@ public:
     // Deletion
     T pop() override {
         if (getSize() == 0) {
-            throw std::out_of_range("LLS::pop");
+            throw std::runtime_error("LLS::pop");
         }
         T temp = ((this->list).getHead())->data;
         (this->list.removeHead());
