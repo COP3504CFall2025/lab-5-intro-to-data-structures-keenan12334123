@@ -134,8 +134,10 @@ public:
 		Node* temp = rhs.head;
 		this->Clear();
 		this->head = temp;
-		this->tail = rhs.tail;
-		this->count = rhs.count;
+		while (temp != nullptr) {
+			addTail(temp->data);
+			temp = temp->next;
+		}
 		return *this;
 	}
 
@@ -146,6 +148,7 @@ public:
 		count = 0;
 	}
 	LinkedList(const LinkedList<T>& list) : head(list.head), tail(list.tail), count(list.count) {}
+
 	LinkedList(LinkedList<T>&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
 		other.head = nullptr;
 		other.tail = nullptr;
