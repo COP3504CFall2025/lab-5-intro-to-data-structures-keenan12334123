@@ -156,7 +156,13 @@ public:
 		tail = nullptr;
 		count = 0;
 	}
-	LinkedList(const LinkedList<T>& list) : head(list.head), tail(list.tail), count(list.count) {}
+	LinkedList(const LinkedList<T>& list) : head(list.head), tail(list.tail), count(list.count) {
+		Node* temp = list.head;
+		while (temp != nullptr) {
+			addTail(temp->data);
+			temp = temp->next;
+		}
+	}
 
 	LinkedList(LinkedList<T>&& other) noexcept : head(other.head), tail(other.tail), count(other.count) {
 		other.head = nullptr;
