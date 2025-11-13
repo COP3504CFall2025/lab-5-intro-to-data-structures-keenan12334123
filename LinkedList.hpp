@@ -141,9 +141,8 @@ public:
 
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
 		if (this == &rhs) return *this;
-		Node* temp = rhs.head;
 		this->clear();
-		this->head = temp;
+		Node* temp = rhs.head;
 		while (temp != nullptr) {
 			addTail(temp->data);
 			temp = temp->next;
