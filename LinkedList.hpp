@@ -52,6 +52,7 @@ public:
 		}
 		else {
 			Node* newHead = new Node(data, nullptr, head);
+			head->prev = newHead;
 			head = newHead;
 		}
 		count++;
@@ -63,6 +64,7 @@ public:
 		}
 		else {
 			Node* newTail = new Node(data, tail, nullptr);
+			tail->next = newTail;
 			tail = newTail;
 		}
 		count++;
@@ -82,6 +84,7 @@ public:
 			Node* temp = head->next;
 			delete head;
 			head = temp;
+			head->prev = nullptr;
 		}
 		count--;
 		return true;
@@ -99,6 +102,7 @@ public:
 			Node* temp = tail->prev;
 			delete tail;
 			tail = temp;
+			tail->next = nullptr;
 		}
 		count--;
 		return true;
