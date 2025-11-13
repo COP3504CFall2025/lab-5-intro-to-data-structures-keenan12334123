@@ -38,7 +38,7 @@ public:
         if (getSize() == 0) {
             throw std::runtime_error("LLS::pop");
         }
-        T temp = ((this->list).getTail())->prev;
+        T temp = ((this->list).getTail())->data;
         (this->list.removeTail());
         return temp;
     }
