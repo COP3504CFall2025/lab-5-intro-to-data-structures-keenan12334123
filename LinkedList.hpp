@@ -14,14 +14,14 @@ public:
 	// Behaviors
 	void printForward() const {
 		Node* current = head;
-		for (int i = 0; i < count; i++) {
+		for (size_t i = 0; i < count; i++) {
 			std::cout << current->data << std::endl;
 			current = current->next;
 		}
 	}
 	void printReverse() const {
 		Node* current = tail;
-		for (int i = 0; i < count; i++) {
+		for (size_t i = 0; i < count; i++) {
 			std::cout << current->data << std::endl;
 			current = current->prev;
 		}
@@ -118,7 +118,7 @@ public:
 		return true;
 	}
 
-	void Clear() {
+	void clear() {
 		while (removeHead()) {}
 	}
 
@@ -127,7 +127,7 @@ public:
 		if (this == &other) {
 			return *this;
 		}
-		this->Clear();
+		this->clear();
 		head = other.head;
 		tail = other.tail;
 		count = other.count;
@@ -142,7 +142,7 @@ public:
 	LinkedList<T>& operator=(const LinkedList<T>& rhs) {
 		if (this == &rhs) return *this;
 		Node* temp = rhs.head;
-		this->Clear();
+		this->clear();
 		this->head = temp;
 		while (temp != nullptr) {
 			addTail(temp->data);
@@ -169,7 +169,7 @@ public:
 	}
 
 	~LinkedList() {
-		this->Clear();
+		this->clear();
 	}
 
 private:
